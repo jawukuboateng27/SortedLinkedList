@@ -12,9 +12,10 @@ class SortedLinkedList
             int searchItem(ItemType item);
             ItemType GetNextItem();
             void ResetList();
-            ItemType Merge();
-            int DeleteAlternateNodes(ItemType item);
+            ItemType Merge(ItemType item);
+            void DeleteAlternateNodes(ItemType item);
             int Intersection();
+            void printList();
 
     private:
             ListNode *head;

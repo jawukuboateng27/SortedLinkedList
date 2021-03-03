@@ -36,10 +36,10 @@
 
         bool isDuplicate = false;
         while (current != nullptr) {
-            if (item.compareTo(current->item) == GREATER) {
+            if (item.compareTo(current->item) == ItemType::GREATER) {
                 prev = current;
                 current = current->next;
-            } else if (item.compareTo(current->item) == EQUAL) {
+            } else if (item.compareTo(current->item) == ItemType::EQUAL) {
                 cout << "\nSorry. You cannout insert the duplicate item.\n" << endl;
                 isDuplicate = true;
                 delete newNode;
@@ -71,7 +71,7 @@
             return;
         }
         //deleting the first item
-        if(item.compareTo(current->item)== EQUAL)
+        if(item.compareTo(current->item)== ItemType::EQUAL)
         {
             head = current->next;
 
@@ -83,7 +83,7 @@
         }
 
         //deleting the only item
-        if((item.compareTo(current->item)==EQUAL) && (current->next == nullptr))
+        if((item.compareTo(current->item)==ItemType::EQUAL) && (current->next == nullptr))
         {
             Length--;
 
@@ -96,11 +96,11 @@
         bool isFound = false;
 
         while(current != nullptr) {
-            if (item.compareTo(current->item) == GREATER) {
+            if (item.compareTo(current->item) == ItemType::GREATER) {
                 prev = current;
                 current = current->next;
             }
-            else if (item.compareTo(current->item) == EQUAL)
+            else if (item.compareTo(current->item) == ItemType::EQUAL)
             {
                 isFound = true;
 
@@ -127,12 +127,12 @@
         ListNode *current = head;
         while(current!= nullptr)
         {
-            if(item.compareTo(current->item)==GREATER)
+            if(item.compareTo(current->item)==ItemType::GREATER)
             {
                 current = current->next;
                 index++;
             }
-            else if(item.compareTo(current->item)==EQUAL)
+            else if(item.compareTo(current->item)==ItemType::EQUAL)
             {
                 return index;
             }

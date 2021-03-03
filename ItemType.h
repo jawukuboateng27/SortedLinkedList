@@ -1,7 +1,6 @@
 #ifndef ITEMTYPE_H
 #define ITEMTYPE_H
 
-enum Comparison{GREATER,LESS,EQUAL};
 
 class ItemType {
    
@@ -10,6 +9,7 @@ class ItemType {
       // Default constructor
       ItemType();
       // Value Comparison Method
+      enum Comparison{GREATER,LESS,EQUAL};
       Comparison compareTo(ItemType item);
       // Value Getter Method
       int getValue()const;

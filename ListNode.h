@@ -3,6 +3,7 @@
 #include "ItemType.h"
 
 struct ListNode {
+   ListNode();
    ListNode(ItemType i, ListNode *n)
    {
       item = i;

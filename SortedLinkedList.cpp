@@ -165,12 +165,13 @@
             }
         }
         //if currentPos is null, set to head
-        if(currentPos == nullptr)
+        if(currentPos == nullptr){
             currentPos = head;
 
         //prepare item to be returned and advance pointer
         item = currentPos->item;
         currentPos = currentPos->next;
+       }
         return item;
     }
 

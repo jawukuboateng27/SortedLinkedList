@@ -3,13 +3,16 @@
 #include "ItemType.h"
 
 struct ListNode {
-
-   // Public Variables
-   public:
-        // Item Object
-        ItemType item;
-        // Next Pointer
-        ListNode *next;
+   ListNode(ItemType i, ListNode *n)
+   {
+      item = i;
+      n = next;
+   }
+    // Item Object
+    ItemType item;
+   
+    // Next Pointer
+    ListNode *next;
 };
 
 #endif

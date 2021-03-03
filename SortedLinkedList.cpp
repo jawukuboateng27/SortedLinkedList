@@ -180,35 +180,102 @@
         currentPos = nullptr;
     }
 
-    ItemType SortedLinkedList::Merge(ItemType item)
+     void SortedLinkedList::Merge(SortedLinkedList *list2)
     {
-        
-    }
-    void SortedLinkedList::DeleteAlternateNodes(ItemType item)
-    {
-        ListNode *current = head;
-        ListNode *last;
-        int index = 1;
-        while(current != nullptr)
+        bool check = false;
+        for(int i = 0; i < list2->length(); i++)
         {
-                current = head;
-                last = current->next;
-                last->next = nullptr;
-                index++;
+            if(this->searchItem(list2->currentPos->item) > -1)
+            {
+                check = true;
+            }
+            list2->currentPos = list2->currentPos->next;
+        }
+            list2->ResetList();
+        ListNode *temp2 = new ListNode(list2->getHead()->item, list2->getHead()->next);
+        int cont;
+        if(check)
+        {
+            cout<<"Sorry. You cannot insert the duplicate item."<<endl;
+            return;
+        }
+        else
+        {
+            while(temp2 != nullptr)
+            {
+                ItemType copy;
+                int i = temp2->item.getValue();
+                copy.initialize(i);
 
-                if(index % 2 == 0)
+                this->insertItem(copy);
+                if(temp2->next == nullptr)
                 {
-                    delete current;
-                    Length--;
-                } else
-                    break;
-
+                    return;
+                }
+                temp2 = temp2->next;
+            }
         }
     }
 
-    int SortedLinkedList::Intersection()
+    ListNode *SortedLinkedList::getHead()
+    {
+        return head;
+    }
+
+        
+    void SortedLinkedList::DeleteAlternateNodes(ItemType item)
     {
 
+        ListNode *temp = this->head;
+        int Length = this->length();
+        //check length of list
+        if(Length < 2)
+        {
+            cout<<"List length is not sufficient to apply this method."<<endl;
+            return;
+        }
+
+        if(Length%2 == 0)
+        {
+            // even case
+            while (temp->next->next != nullptr)
+            {
+                deleteItem(temp->next->item);
+                temp = temp->next;
+            }
+            deleteItem(temp->next->item);
+        }
+        else
+        {
+            // odd case
+            while (temp->next != nullptr)
+            {
+                deleteItem(temp->next->item);
+                temp = temp->next;
+            }
+        }
+    }
+
+    SortedLinkedList *SortedLinkedList::Intersection(SortedLinkedList *another)
+    {
+        SortedLinkedList *list = new SortedLinkedList();
+        ListNode *temp = new ListNode(another->getHead()->item, another->getHead()->next);
+
+        //iterate through other list
+        while(temp != nullptr)
+        {
+            if(this->searchItem(temp->item) != -1)
+            {
+                ItemType copy;
+                int i = temp->item.getValue();
+                copy.initialize(i);
+                list->insertItem(copy);
+            }
+            if(temp->next == nullptr)
+                break;
+            temp = temp->next;
+        }
+        return list;
     }
 
     void SortedLinkedList::printList()

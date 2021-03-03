@@ -179,11 +179,11 @@
         currentPos = nullptr;
     }
 
-    ItemType SortedLinkedList::Merge()
+    ItemType SortedLinkedList::Merge(ItemType item)
     {
-
+        
     }
-    int SortedLinkedList::DeleteAlternateNodes(ItemType item)
+    void SortedLinkedList::DeleteAlternateNodes(ItemType item)
     {
         ListNode *current = head;
         ListNode *last;
@@ -203,12 +203,24 @@
                     break;
 
         }
-
     }
 
     int SortedLinkedList::Intersection()
     {
-        
+
+    }
+
+    void SortedLinkedList::printList()
+    {
+        ResetList();
+
+        for(int i = 0; i < Length; i++) {
+            ItemType item = GetNextItem();
+
+            cout << item.getValue() << " ";
+        }
+
+        cout << endl;
     }
 
 

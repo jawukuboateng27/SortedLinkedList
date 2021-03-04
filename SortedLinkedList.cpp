@@ -2,228 +2,214 @@
 
 #include "SortedLinkedList.h"
 
+using namespace std;
 
-    using namespace std;
+SortedLinkedList::SortedLinkedList() {
+    head = nullptr;
+    currentPos = nullptr;
+    lengthValue = 0;
+}
 
-    SortedLinkedList::SortedLinkedList()
-    {
-        head = nullptr;
-        currentPos = nullptr;
-        Length = 0;
+SortedLinkedList::~SortedLinkedList() {
+    ListNode* current;
+
+    // iterate through the list and delete all the nodes
+    while(head != nullptr) {
+	current = head;
+	head = head->next;
+	delete current;
+    }
+}
+
+int SortedLinkedList::length() const {
+    return lengthValue; // a length variable will be used for the length
+}
+
+void SortedLinkedList::insertItem(ItemType item) {
+    ListNode* newNode = new ListNode;
+    newNode->item = item;
+    
+    ListNode* prev = nullptr;
+    ListNode* current = head;
+
+    bool isDuplicate = false;
+    while(current != nullptr) {
+	if(item.compareTo(current->item) == GREATER) { // keep going
+	    prev = current;
+	    current = current->next;
+	}
+
+	else if(item.compareTo(current->item) == EQUAL) { // duplicate item
+	    cout << "\nSorry. You cannot insert the duplicate item\n" << endl;
+	    isDuplicate = true;
+	    delete newNode; // delete the unused new node to avoid a memory leak
+	    break;
+	}
+
+	else // found the location to insert item
+	    break;
     }
 
-    SortedLinkedList::~SortedLinkedList()
-    {
-        ListNode* current;
-        // go through the list and delete all the nodes
-        while(head != nullptr) {
-            current = head;
-            head = head->next;
-            delete current;
-        }
+    // if newNode is being inserted into the very beginning or is being inserted to empty list
+    if(prev == nullptr && !isDuplicate) {
+	newNode->next = current;
+	head = newNode;
+	lengthValue++;
     }
 
-    int SortedLinkedList::length() const
-    {
-        return Length;
+    else if(!isDuplicate) { // general case insert
+	prev->next = newNode;
+	newNode->next = current;
+	lengthValue++;
+    }
+}
+
+void SortedLinkedList::deleteItem(ItemType item) {
+    ListNode* prev = nullptr;
+    ListNode* current = head;
+
+    if(head == nullptr) { // list is empty
+	cout << "You cannot delete from an empty list" << endl;
+
+	return;
     }
 
-    void SortedLinkedList::insertItem(ItemType item) {
-        ListNode *newNode = new ListNode;
-        newNode->item = item;
-        ListNode *prev = nullptr;
-        ListNode *current = head;
+    if(item.compareTo(current->item) == EQUAL) { // deleting the first item
+	head = current->next;
 
-        bool isDuplicate = false;
-        while (current != nullptr) {
-            if (item.compareTo(current->item) == ItemType::GREATER) {
-                prev = current;
-                current = current->next;
-            } else if (item.compareTo(current->item) == ItemType::EQUAL) {
-                cout << "\nSorry. You cannout insert the duplicate item.\n" << endl;
-                isDuplicate = true;
-                delete newNode;
-                break;
-            } else
-                break;
+	lengthValue--;
 
-        }
-        if (prev == nullptr && !isDuplicate) {
-            newNode->next = current;
-            head = newNode;
-            Length++;
-        } else if (!isDuplicate) {
-            prev->next = newNode;
-            newNode->next = current;
-            Length++;
-        }
+	delete current;
+
+	return;
     }
 
-    //trying to delete from an empty list
-    void SortedLinkedList::deleteItem(ItemType item)
-    {
-        ListNode *prev = nullptr;
-        ListNode *current = head;
+    // deleting the only item
+    if((item.compareTo(current->item) == EQUAL) && (current->next == nullptr)) {
+	lengthValue--;
 
-        if(head == nullptr)
-        {
-            cout<<"You cannot delete from an empty list"<<endl;
-            return;
-        }
-        //deleting the first item
-        if(item.compareTo(current->item)== ItemType::EQUAL)
-        {
-            head = current->next;
+	delete current;
 
-            Length--;
+	head = nullptr;
 
-            delete current;
+	return;
+    }
+    
+    bool isFound = false;
+    while(current != nullptr) {
+	if(item.compareTo(current->item) == GREATER) { // keep going
+	    prev = current;
+	    current = current->next;
+	}
 
-            return;
-        }
+	else if(item.compareTo(current->item) == EQUAL) { // item found
+	    isFound = true;
+	    
+	    break;
+	}
 
-        //deleting the only item
-        if((item.compareTo(current->item)==ItemType::EQUAL) && (current->next == nullptr))
-        {
-            Length--;
-
-            delete current;
-
-            head = nullptr;
-
-            return;
-        }
-        bool isFound = false;
-
-        while(current != nullptr) {
-            if (item.compareTo(current->item) == ItemType::GREATER) {
-                prev = current;
-                current = current->next;
-            }
-            else if (item.compareTo(current->item) == ItemType::EQUAL)
-            {
-                isFound = true;
-
-                break;
-            }
-            else
-                break;
-        }
-
-            if(isFound)
-            {
-                prev->next = current -> next;
-                Length--;
-                delete current;
-            }else
-                cout<<"Item not found\n"<<endl;
-
-
+	else // if given item is less than current item has not been found by now, item isn't in list
+	    break;
     }
 
-    int SortedLinkedList::searchItem(ItemType item)
-    {
-        int index = 0;
-        ListNode *current = head;
-        while(current!= nullptr)
-        {
-            if(item.compareTo(current->item)==ItemType::GREATER)
-            {
-                current = current->next;
-                index++;
-            }
-            else if(item.compareTo(current->item)==ItemType::EQUAL)
-            {
-                return index;
-            }
-            else //compares to LESS
-                break;
-        }
-        cout<<"Item not found\n"<<endl; //after comparing to LESS meaning item not in list
-        return -1;
+    if(isFound) { // general case delete
+	prev->next = current->next;
+    
+	lengthValue--;
+   
+	delete current;
     }
 
-    ItemType SortedLinkedList::GetNextItem()
-    {
-        ItemType item;
+    else
+	cout << "Item not found\n" << endl;
+}
 
-        if(head == nullptr)
-        {
-            cout<<"List is empty"<<endl;
+// same as the other deleteItem, but works with the given index integer
+void SortedLinkedList::deleteItem(int index) {
+    deleteItem(searchItem(index));
+}
 
-            return item;
-        }
-        if(currentPos != nullptr)
-        {
-            //before pointer gets to the end it should go back to the beginning
-            if(currentPos->next == nullptr)
-            {
-                item = currentPos->item;
-                currentPos = head;
+int SortedLinkedList::searchItem(ItemType item) {
+    int index = 0;
 
-                return item;
-            }
-        }
-        //if currentPos is null, set to head
-        if(currentPos == nullptr){
-            currentPos = head;
+    ListNode* current = head;
+    while(current != nullptr) {
+	if(item.compareTo(current->item) == GREATER) { // item is further down the list
+	    current = current->next;
+	    index++;
+	}
 
-        //prepare item to be returned and advance pointer
-        item = currentPos->item;
-        currentPos = currentPos->next;
-       }
-        return item;
+	else if(item.compareTo(current->item) == EQUAL) // item has been found
+	    return index;
+
+	else // aka compareTo == LESS, which means item is not in list and has not been found
+	    break;
     }
 
-    void SortedLinkedList::ResetList()
-    {
-        currentPos = nullptr;
+    cout << "Item not found\n" << endl;
+
+    return -1;
+}
+
+// like the other searchItem, but returns an ItemType given an index integer
+ItemType SortedLinkedList::searchItem(int index) {
+    ItemType item;
+
+    // index is out of bounds or list is empty 
+    if(index < 0 || index > lengthValue-1 || head == nullptr) {
+	cout << "Item not found" << endl;
+
+	return item;
     }
 
-     void SortedLinkedList::Merge(SortedLinkedList *list2)
-    {
-        bool check = false;
-        for(int i = 0; i < list2->length(); i++)
-        {
-            if(this->searchItem(list2->currentPos->item) > -1)
-            {
-                check = true;
-            }
-            list2->currentPos = list2->currentPos->next;
-        }
-            list2->ResetList();
-        ListNode *temp2 = new ListNode(list2->getHead()->item, list2->getHead()->next);
-        int cont;
-        if(check)
-        {
-            cout<<"Sorry. You cannot insert the duplicate item."<<endl;
-            return;
-        }
-        else
-        {
-            while(temp2 != nullptr)
-            {
-                ItemType copy;
-                int i = temp2->item.getValue();
-                copy.initialize(i);
+    ListNode* current = head;
+    int i = 0;
+    while(current != nullptr) {
+	if(i == index) // found item
+	    return current->item;
 
-                this->insertItem(copy);
-                if(temp2->next == nullptr)
-                {
-                    return;
-                }
-                temp2 = temp2->next;
-            }
-        }
+	current = current->next;
+	i++;
     }
 
-    ListNode *SortedLinkedList::getHead()
-    {
-        return head;
+    return item;
+}
+
+ItemType SortedLinkedList::GetNextItem() {
+    ItemType item;
+
+    if(head == nullptr) { // list is empty
+	cout << "List is empty" << endl;
+
+	return item;
     }
 
-        
-    void SortedLinkedList::DeleteAlternateNodes(ItemType item)
+    if(currentPos != nullptr) {
+	// if the pointer is about to reach the end, go back to the beginning
+	if(currentPos->next == nullptr) {
+	    item = currentPos->item;
+	    currentPos = head;
+
+	    return item;
+	}
+    }
+
+    // if currentPos is null, set to head so it can be used
+    if(currentPos == nullptr)
+	currentPos = head;
+
+    // prepare item to be returned and advance the pointer
+    item = currentPos->item;
+    currentPos = currentPos->next;
+
+    return item;
+}
+
+void SortedLinkedList::ResetList() {
+    currentPos = nullptr;
+}
+
+void SortedLinkedList::DeleteAlternateNodes(ItemType item)
     {
 
         ListNode *temp = this->head;
@@ -256,40 +242,33 @@
         }
     }
 
-    SortedLinkedList *SortedLinkedList::Intersection(SortedLinkedList *another)
-    {
-        SortedLinkedList *list = new SortedLinkedList();
-        ListNode *temp = new ListNode(another->getHead()->item, another->getHead()->next);
 
-        //iterate through other list
-        while(temp != nullptr)
-        {
-            if(this->searchItem(temp->item) != -1)
-            {
-                ItemType copy;
-                int i = temp->item.getValue();
-                copy.initialize(i);
-                list->insertItem(copy);
-            }
-            if(temp->next == nullptr)
-                break;
-            temp = temp->next;
-        }
-        return list;
+
+// A helper function that iterates through the list and finds the previous node
+// of the given node. Used in the reverse() function
+ListNode* SortedLinkedList::findPrevNode(ListNode* node) {
+    ListNode* prev = nullptr;
+    ListNode* current = head;
+
+    while(current->next != nullptr) {
+	if(current == node)
+	    return prev;
+
+	prev = current;
+	current = current->next;
     }
 
-    void SortedLinkedList::printList()
-    {
-        ResetList();
+    return prev;
+}
 
-        for(int i = 0; i < Length; i++) {
-            ItemType item = GetNextItem();
+void SortedLinkedList::printList() {
+    ResetList();
+    
+    for(int i = 0; i < lengthValue; i++) {
+	ItemType item = GetNextItem();
 
-            cout << item.getValue() << " ";
-        }
-
-        cout << endl;
+	cout << item.getValue() << " ";
     }
 
-
-
+    cout << endl;
+}

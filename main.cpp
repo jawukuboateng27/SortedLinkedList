@@ -6,132 +6,130 @@
 
 using namespace std;
 
+int main(int argc, char * argv[]) {
+    SortedLinkedList list; 
+    
+    ItemType item;
+    int input;
+    fstream fs;
 
+    fs.open(argv[1], fstream::in); // reads input file
 
-    int main(int argc, char *argv[])
-    {
-        SortedLinkedList list;
-        ItemType item;
-        int input;
-        fstream fs;
-        fs.open(argv[1], fstream::in);
-        if(fs.is_open()) {
-            fs >> input;
-            while (!fs.eof()) {
-                item.initialize(input);
-                list.insertItem(item);
-                fs >> input;
-            }
-            cout <<(
-                    "(i) - Insert value"
-                    "\n(d) - Delete value"
-                    "\n(s) - Search value"
-                    "\n (n) - Print next iterator value"
-                    "\n(r) - Reset iterator"
-                    "\n(a) - Delete alternate nodes"
-                    "\n(m) - Merge two lists"
-                    "\n(t) - Intersection"
-                    "\n(p) - Print list"
-                    "\n(l) - Print length"
-                    "\n(q) - Quit program"
-            );
-        }
-           else{
-                cout<<"Failed to open the input file"<<endl;
-                return 0;
-            }
-           bool loop = true;
-           char character;
-           while(loop)
-           {
-               cout<<"\nEnter a command: ";
-               cin>> character;
-               cout<<"\n";
+    if (fs.is_open()) {
+    	fs >> input;
+    	while (!fs.eof()) {
+    	    item.initialize(input);
+    	    list.insertItem(item);
+    	    fs >> input;
+    	}
 
-               switch (character) {
-                   case 'i': {
-                       list.printList();
-                       cout << "\nEnter number: ";
-                       int number;
-                       cin >> number;
-                       cin >> number;
-                       cout << endl;
-                       ItemType numType(number);
-                       list.insertItem(numType);
-                       list.printList();
-                       break;
-                   }
-                   case 'd': {
-                       list.printList();
-                       int value;
-                       cout << "\nEnter value to delete: ";
-                       cin >> value;
-                       cout << endl;
-                       ItemType valueType(value);
-                       list.deleteItem(valueType);
-                       list.printList();
-                       break;
-                   }
-                   case 's': {
-                       cout << "\nEnter value to search: ";
-                       int searchNumber;
-                       cin >> searchNumber;
-                       cout << endl;
-                       ItemType searchNumberType(searchNumber);
+    	cout << "Commands:" << endl;
+    	cout << "\n(i) - Insert value" << endl;
+    	cout << "\n(d) - Delete value" << endl;
+    	cout << "\n(s) - Search value" << endl;
+    	cout << "\n(n) - Print next iterator value" << endl;
+    	cout << "\n(r) - Reset iterator" << endl;
+    	cout << "\n(p) - Print list" << endl;
+    	cout << "\n(l) - Print length" << endl;
+    	cout << "\n(a) - Delete Altnate Node" << endl;
+    	cout << "\n(q) - Quit program" << endl;
+    }
 
-                       int index = list.searchItem(searchNumberType);
-                       if (index != -1)
+    else {
+    	cout << "Failed to open the input file" << endl;
+    	return 0;
+    }
 
-                           cout << "Index " << index << endl;
-                       break;
+    bool loop = true;
+    char character; // character input when entering a command
 
-                   }
-                   case 'n': {
-                       ItemType item = list.GetNextItem();
-                       if (list.length() > 0)
-                           cout << item.getValue() << endl;
-                       break;
-                   }
+    while (loop) {
+    	cout << "\nEnter a command: ";
+    	cin >> character;
+    	cout << "\n";
 
-                   case 'r': {
-                       list.ResetList();
-                       cout << "Iterator reset." << endl;
-                       list.printList();
-                       break;
-                   }
+    	switch (character) {
+    	case 'i': { // insert command that inserts a node in the linked list
+    	    list.printList();
+    	    cout << "\nEnter number: ";
+    	    int number;
+    	    cin >> number;
+    	    cout << endl;
+    	    ItemType numType(number);
+    	    list.insertItem(numType);
+    	    list.printList();
+    	    break;
+    	}
+    	case 'd': { // delete command that deletes a node in the linked list
+    	    list.printList();
+    	    int value;
+    	    cout << "\nEnter value to delete: ";
+    	    cin >> value;
+    	    cout << endl;
+    	    ItemType valueType(value);
+    	    list.deleteItem(valueType);
+    	    list.printList();
+    	    break;
+    	}
+    	case 's': { // search command that searches for a node in the linked list
+    	    cout << "Enter value to search: ";
+    	    int searchNum;
+    	    cin >> searchNum;
+    	    cout << endl;
+    	    ItemType searchNumType(searchNum);
 
-                   case 'a': {
+	    int index = list.searchItem(searchNumType);
 
-                   }
+	    if(index != -1)
+		cout << "Index " << index << endl;
+    	    break;
+    	}
+    	case 'n': { // next command that gets the next node in the linked list
+	    ItemType item = list.GetNextItem();
 
-                   case 'm': {
+	    if(list.length() > 0)
+		cout << item.getValue() << endl;
+    	    break;
+    	}
+    	case 'r': { // reset command that restarts the linked list back to the first position and element
+    	    list.ResetList();
+    	    cout << "Iterator reset." << endl;
+    	    break;
+    	}
+    	case 'p': { // print command that prints the linked list
+    	    list.printList();
+    	    break;
+    	}
+    	case 'l': { // length command that returns the length of the linked list
+    	    cout << "List Length is " << list.length() << endl;
+    	    break;
+    	}
+    	case 'a': { // Delete alt node
+	  
+	    
+    	    list.printList();
 
-                   }
+    	    cout << endl;
 
-                   case 't': {
+    	    list.DeleteAlternateNodes(item);
+	    
+    	    cout << "After" << endl;
 
-                   }
+    	    cout << endl;
 
-                   case 'p': {
-                       list.printList();
-                       break;
-                   }
+    	    list.printList();
+    	    break;
+    	}
+    	case 'q': { // quit command that stops the while loop and exits the program
+    	    cout << "Quitting program..." << endl;
+    	    loop = false;
+    	    break;
+    	}
+    	default: { // this will print when the command is invalid
+    	    cout << "Invalid command, try again!" << endl;
+    	    break;
+    	}
+    	}
 
-                   case 'l': {
-
-                   }
-
-                   case 'q': {
-                       cout << "Quitting program..." << endl;
-                       loop = false;
-                       break;
-                   }
-                   default: {
-                       cout << "Invalid command, try again!" << endl;
-                       break;
-                   }
-               }
-           }
-            return 0;
-        }
-
+    }
+}

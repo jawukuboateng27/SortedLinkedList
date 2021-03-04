@@ -1,39 +1,35 @@
-#include<iostream>
+#include <iostream>
+#include <fstream>
 #include "ItemType.h"
 
-// Default Constructor
+using namespace std;
+
 ItemType::ItemType() {
     value = 0;
 }
 
-// Constructor
 ItemType::ItemType(int value) {
-    this->value = value;
+    this -> value = value;
 }
 
-// Value Comparison Method
 Comparison ItemType::compareTo(ItemType item) {
-    // Parameter value is less than the current object's value
-    if (value < item.value) {
-        return LESS;
+    if (this -> value > item.getValue()) {
+	return GREATER;
     }
-    // Parameter value is greater than the current object's value
-    else if (value > item.value) {
-        return GREATER;
+
+    else if (this -> value < item.getValue()) {
+	return LESS;
     }
-    // Parameter value is equal to the current object's value
+
     else {
-        return EQUAL;
+	return EQUAL;
     }
 }
-    
-// Return the value instance variable
+
 int ItemType::getValue() const {
     return value;
 }
 
-//  Initializes the data member by variable num
 void ItemType::initialize(int num) {
-    this->value = num;
+    this -> value = num;
 }
-

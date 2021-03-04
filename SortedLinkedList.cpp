@@ -242,25 +242,6 @@ void SortedLinkedList::DeleteAlternateNodes(ItemType item)
         }
     }
 
-
-
-// A helper function that iterates through the list and finds the previous node
-// of the given node. Used in the reverse() function
-ListNode* SortedLinkedList::findPrevNode(ListNode* node) {
-    ListNode* prev = nullptr;
-    ListNode* current = head;
-
-    while(current->next != nullptr) {
-	if(current == node)
-	    return prev;
-
-	prev = current;
-	current = current->next;
-    }
-
-    return prev;
-}
-
 void SortedLinkedList::printList() {
     ResetList();
     

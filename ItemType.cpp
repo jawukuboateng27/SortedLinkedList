@@ -1,6 +1,8 @@
 #include<iostream>
 #include "ItemType.h"
 
+using namespace std;
+
 // Default Constructor
 ItemType::ItemType() {
     value = 0;

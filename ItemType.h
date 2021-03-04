@@ -1,13 +1,14 @@
 #ifndef ITEMTYPE_H
 #define ITEMTYPE_H
 
-
 class ItemType {
    
    // Public Variables
    public:
       // Default constructor
       ItemType();
+      // Constructor
+      //ItemType(int value);
       // Value Comparison Method
       enum Comparison{GREATER,LESS,EQUAL};
       Comparison compareTo(ItemType item);

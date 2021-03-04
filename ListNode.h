@@ -3,17 +3,20 @@
 #include "ItemType.h"
 
 struct ListNode {
+
+   // Default Constructor     
    ListNode();
+   // ListNode Constructor
    ListNode(ItemType i, ListNode *n)
    {
       item = i;
-      n = next;
    }
-    // Item Object
-    ItemType item;
+   // Item Object
+   ItemType item;
+   // Next Pointer
+   ListNode *next;
    
-    // Next Pointer
-    ListNode *next;
-};
+}; //ListNode
 
 #endif
+

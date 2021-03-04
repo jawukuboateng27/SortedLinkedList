@@ -5,7 +5,8 @@ Faisal Hossain fh64801@uga.edu
 Jeffrey Awuku-Boateng jka56880@uga.edu
 
 Contribution:
-
+Jeffrey - Created SortedLinkedList.cpp, ListNode.h,ItemType.cpp and makefile. Also worked on the README and debbuged the code
+Faisal - Created the main.cpp, ItemType.h, ListNode.h, and SortedLinkedList.h file, debugged the code and created the README file
 
 
 

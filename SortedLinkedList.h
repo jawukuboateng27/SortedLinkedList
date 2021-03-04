@@ -14,8 +14,6 @@ class SortedLinkedList {
     ItemType GetNextItem();
     void ResetList();
     void DeleteAlternateNodes(ItemType item);
-    ListNode* findPrevNode(ListNode* node);
-    ListNode* getLastNode();
     void printList();
     
  private:

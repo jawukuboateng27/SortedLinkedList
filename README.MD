@@ -21,4 +21,3 @@ For the merge method, a loop was used to iterate through the second list and the
 
 Time Complexity of Merge:
 The ‘for’ loop in the merge method runs up to 'n' times. Within this ‘for’ loop, the search method is used. Search method has a time complexity of 'O(n)'. This yields to a time complexity of O(n^2). The ‘while’ loop in this method runs up to ‘n’ times. The insert method was also used. Insert runs ‘n’ times inside the ‘while’ loop causing the 2nd section of the merge function to have O(n^2). The overall time complexity for the merge function is 'O(n^2)'. A more efficient method would had been the K-Way merge function, which has the time complexity O(n)log(k). This function achieves this lower complexity and is hence a more efficient method. 
-

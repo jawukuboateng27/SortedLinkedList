@@ -5,11 +5,9 @@
 #include <stdio.h>
 #include <cstdlib>
 
-#include "SortedLinkedList.cpp"
-#include "ItemType.cpp"
 #include "SortedLinkedList.h"
 #include "ItemType.h"
-#include "ListNode.h"
+
 
 using namespace std;
 using std::string;
